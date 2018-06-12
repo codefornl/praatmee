@@ -1,7 +1,7 @@
 FROM php:7.0-apache
 
-COPY . /var/www
+COPY . /var/www/html
 
-COPY vhost.conf /etc/apache2/sites-available/
+COPY vhost.conf /etc/apache2/sites-enabled/praatmee.conf
 
-RUN chown -R www-data:www-data /var/www
+RUN chown -R www-data:www-data /var/www/html
