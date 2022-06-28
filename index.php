@@ -25,18 +25,22 @@ function showContent() {
 
 function showForm() {
     ?>
-        <form method="post">
+	<form method="post">
+	<div>
             <label>
                 <span>Voornaam</span><br>
                 <input type="text" name="name" <?php echo isset($_POST['name']) ? "value=\"{$_POST['name']}\"" : "" ?> >
-            </label><br>
-
-            <label style="display: block; padding-top: 1em">
+            </label>
+	</div>
+	<div>
+            <label style="display: block">
                 <span>E-mail</span><br>
                 <input type="email" name="email" <?php echo isset($_POST['email']) ? "value=\"{$_POST['email']}\"" : "" ?> >
-            </label>
-
-            <p><input class="cta" type="submit" value="Nodig me uit!" /></p>
+	    </label>
+	</div>
+	<div>
+	    <p><input class="cta" type="submit" value="Nodig me uit!" /></p>
+	</div>
         </form>
     <?php
 } // showForm
@@ -140,7 +144,10 @@ function getError() {
                 border: 1px solid silver;
                 padding: 0.2em;
                 font-size: 1em;
-            }
+	    }
+	form {
+		display: block;
+	}
         </style>
     </head>
     <body>
