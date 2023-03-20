@@ -5,11 +5,13 @@ $rs = [];
 function showContent() {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!isset($_POST["name"]) ||
-            !strlen($_POST["name"]) > 0 ||
+	    !strlen($_POST["name"]) > 0 ||
+	    !isset($_POST["bot"]) ||
+	    strtolower($_POST["bot"]) !== "nee" ||
             !isset($_POST["email"]) ||
             !strlen($_POST["email"]) > 0) {
             showForm();
-            showMessage("Let op: beide velden zijn verplicht.");
+            showMessage("Let op: alle velden zijn verplicht en je mag geen bot zijn.");
         } else {
             if (sendForm($_POST["name"], $_POST["email"])) {
                 showMessage("Gelukt! Je ontvangt een uitnodiging per e-mail.", "success");
@@ -39,6 +41,12 @@ function showForm() {
 	    </label>
 	</div>
 	<div>
+            <label style="display: block">
+                <span>Ben je een bot, ja of nee?</span><br>
+                <input type="text" name="bot" <?php echo isset($_POST['bot']) ? "value=\"{$_POST['bot']}\"" : "" ?> >
+	    </label>
+	</div>
+	<div>
 	    <p><input class="cta" type="submit" value="Nodig me uit!" /></p>
 	</div>
         </form>
@@ -53,12 +61,11 @@ function sendForm($name, $email) {
     global $rs;
 
     $slackInviteUrl = "https://codefornl.slack.com/api/users.admin.invite?t=" . time();
-
     $fields = array(
-        'email' => $email,
-        'first_name' => $name,
+	'email' => $email,
+	'first_name' => $name,
         'token' => getenv('SLACK_TOKEN'),
-        'set_active' => 'true',
+	'set_active' => 'true',
         '_attempts' => '1'
     );
 
